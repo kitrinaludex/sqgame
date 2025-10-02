@@ -28,10 +28,10 @@ public class MoveHandler implements HttpHandler {
 
             byte[] body = exchange.getRequestBody().readNBytes(MAX_SIZE + 1);
             if (body.length > MAX_SIZE) {
-                sendJsonError(exchange,413,"Payload too large");
+                sendJsonError(exchange, 413, "Payload too large");
             }
 
-            BoardDto req = mapper.readValue(body,BoardDto.class);
+            BoardDto req = mapper.readValue(body, BoardDto.class);
             Board board = req.toBoard();
 
             if (board.isFull()) {
@@ -50,19 +50,19 @@ public class MoveHandler implements HttpHandler {
                 os.write(bytes);
             }
 
-        }catch (IOException | IllegalArgumentException e) {
-            sendJsonError(exchange,400,"Bad Request");
-        }catch (Exception e) {
-            sendJsonError(exchange,500,"Internal Server Error");
+        } catch (IOException | IllegalArgumentException e) {
+            sendJsonError(exchange, 400, "Bad Request");
+        } catch (Exception e) {
+            sendJsonError(exchange, 500, "Internal Server Error");
         }
     }
 
-    private void sendJsonError(HttpExchange exchange,int statusCode,String message) throws IOException {
-        Map<String,String> error = Map.of("error",message);
+    private void sendJsonError(HttpExchange exchange, int statusCode, String message) throws IOException {
+        Map<String, String> error = Map.of("error", message);
         byte[] bytes = mapper.writeValueAsBytes(error);
 
         exchange.getResponseHeaders().set("Content-Type", "application/json");
-        exchange.sendResponseHeaders(statusCode,bytes.length);
+        exchange.sendResponseHeaders(statusCode, bytes.length);
         try (OutputStream os = exchange.getResponseBody()) {
             os.write(bytes);
         }

@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public class StatusHandler implements HttpHandler {
-        private final ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper = new ObjectMapper();
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
@@ -21,45 +21,44 @@ public class StatusHandler implements HttpHandler {
         }
 
         GameStatusDto status = new GameStatusDto();
-    try {
-        BoardDto req = mapper.readValue(exchange.getRequestBody(), BoardDto.class);
-        Board board = req.toBoard();
+
+        try {
+            BoardDto req = mapper.readValue(exchange.getRequestBody(), BoardDto.class);
+            Board board = req.toBoard();
 
 
-        status.setColor(req.getNextPlayerColor());
-        status.setMessage("Ok");
+            status.setColor(req.getNextPlayerColor());
+            status.setMessage("Ok");
 
-        if (board.checkWin('W')) {
-            status.setStatus(1);
-            status.setColor("w");
-        } else if (board.checkWin('B')) {
-            status.setStatus(1);
-            status.setColor("b");
-        } else if (board.isFull()) {
-            status.setStatus(2);
+            if (board.checkWin('W')) {
+                status.setStatus(1);
+                status.setColor("w");
+            } else if (board.checkWin('B')) {
+                status.setStatus(1);
+                status.setColor("b");
+            } else if (board.isFull()) {
+                status.setStatus(2);
+            }
+
+            byte[] bytes = mapper.writeValueAsBytes(status);
+            exchange.getResponseHeaders().add("Content-Type", "application/json");
+            exchange.sendResponseHeaders(200, bytes.length);
+            try (OutputStream os = exchange.getResponseBody()) {
+                os.write(bytes);
+            }
+
+        } catch (Exception e) {
+            status.setStatus(-1);
+            status.setMessage("Error");
+            status.setColor("");
+
+            byte[] bytes = mapper.writeValueAsBytes(status);
+            exchange.getResponseHeaders().set("Content-Type", "application/json");
+            exchange.sendResponseHeaders(400, bytes.length);
+            try (OutputStream os = exchange.getResponseBody()) {
+                os.write(bytes);
+            }
         }
-
-        byte[] bytes = mapper.writeValueAsBytes(status);
-        exchange.getResponseHeaders().add("Content-Type", "application/json");
-        exchange.sendResponseHeaders(200, bytes.length);
-        try (OutputStream os = exchange.getResponseBody()) {
-            os.write(bytes);
-        }
-
-    }catch (Exception e) {
-        e.printStackTrace();
-
-        status.setStatus(-1);
-        status.setMessage("Error:" + e.getMessage());
-        status.setColor("");
-
-        byte[] bytes = mapper.writeValueAsBytes(status);
-        exchange.getResponseHeaders().set("Content-Type", "application/json");
-        exchange.sendResponseHeaders(500,bytes.length);
-        try (OutputStream os = exchange.getResponseBody()) {
-            os.write(bytes);
-        }
-    }
     }
 
 }

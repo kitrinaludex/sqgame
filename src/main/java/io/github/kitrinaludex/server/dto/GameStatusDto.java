@@ -8,27 +8,27 @@ public class GameStatusDto {
     public GameStatusDto() {
     }
 
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
     public String getColor() {
         return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public String getMessage() {
         return message;
     }
 
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     public int getStatus() {
         return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

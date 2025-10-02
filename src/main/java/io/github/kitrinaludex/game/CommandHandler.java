@@ -15,7 +15,7 @@ public class CommandHandler {
 
             switch (command) {
                 case "GAME":
-                    if (parts.length != 6){
+                    if (parts.length != 6) {
                         System.out.println("Incorrect command");
                         break;
                     }
@@ -28,12 +28,13 @@ public class CommandHandler {
                         if (p1.color == p2.color) {
                             throw new IllegalArgumentException();
                         }
-                        currentGame = new Game(n,p1,p2);
+                        currentGame = new Game(n, p1, p2);
                         System.out.println("New game started");
                         currentGame.start();
                         break;
-                    }catch (IllegalArgumentException e) {
+                    } catch (IllegalArgumentException e) {
                         System.out.println("Incorrect command");
+                        break;
                     }
 
                 case "MOVE":
@@ -48,7 +49,7 @@ public class CommandHandler {
 
                     int x = Integer.parseInt(parts[1]);
                     int y = Integer.parseInt(parts[2]);
-                    currentGame.applyMove(new Move(currentGame.getCurrentPlayer().getColor(),x,y));
+                    currentGame.applyMove(new Move(currentGame.getCurrentPlayer().getColor(), x, y));
                     break;
 
                 case "HELP":
@@ -65,7 +66,7 @@ public class CommandHandler {
     }
 
 
-    public Player parsePlayer(String playerType,String playerColor) {
+    public Player parsePlayer(String playerType, String playerColor) {
         char pc = playerColor.toUpperCase().charAt(0);
         if (pc != 'W' && pc != 'B') {
             throw new IllegalArgumentException();
@@ -73,7 +74,7 @@ public class CommandHandler {
         if (playerType.equals("user")) {
             try {
                 return new UserPlayer(pc);
-            }catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException e) {
                 System.out.println("Incorrect command");
             }
         }

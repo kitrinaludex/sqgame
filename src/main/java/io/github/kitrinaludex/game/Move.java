@@ -14,6 +14,6 @@ public class Move {
     }
 
     public SimpleMoveDto toDto() {
-        return new SimpleMoveDto(x,y,color);
+        return new SimpleMoveDto(x, y, color);
     }
 }

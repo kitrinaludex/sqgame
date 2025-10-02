@@ -104,10 +104,10 @@ public class Board {
         Collections.sort(dists);
 
         return dists.get(0) > 0 &&
-               dists.get(0).equals(dists.get(1)) &&
-               dists.get(1).equals(dists.get(2)) &&
-               dists.get(2).equals(dists.get(3)) &&
-               dists.get(4).equals(dists.get(5)) &&
-               dists.get(4) == 2 * dists.get(0);
+                dists.get(0).equals(dists.get(1)) &&
+                dists.get(1).equals(dists.get(2)) &&
+                dists.get(2).equals(dists.get(3)) &&
+                dists.get(4).equals(dists.get(5)) &&
+                dists.get(4) == 2 * dists.get(0);
     }
 }

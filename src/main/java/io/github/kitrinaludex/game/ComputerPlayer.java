@@ -15,8 +15,8 @@ public class ComputerPlayer extends Player {
         while (true) {
             int x = rng.nextInt(size);
             int y = rng.nextInt(size);
-            if (board.isCellEmpty(x,y)) {
-                return new Move(super.color,x,y);
+            if (board.isCellEmpty(x, y)) {
+                return new Move(super.color, x, y);
             }
         }
     }

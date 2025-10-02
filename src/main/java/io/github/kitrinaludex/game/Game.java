@@ -7,7 +7,7 @@ public class Game {
     private Player currentPlayer;
     private boolean finished = false;
 
-    public Game(int size,Player p1,Player p2) {
+    public Game(int size, Player p1, Player p2) {
         board = new Board(size);
         this.player1 = p1;
         this.player2 = p2;

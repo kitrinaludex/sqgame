@@ -18,12 +18,12 @@ public class BoardDto {
         char[] chars = data.toCharArray();
 
         for (int y = 0; y < size; y++) {
-            for (int x = 0; x < size;x++) {
+            for (int x = 0; x < size; x++) {
                 char c = chars[y * size + x];
                 if (c == 'w') {
-                    board.placePiece(new Move('W',x,y));
-                }else if (c == 'b') {
-                    board.placePiece(new Move('B',x,y));
+                    board.placePiece(new Move('W', x, y));
+                } else if (c == 'b') {
+                    board.placePiece(new Move('B', x, y));
                 }
             }
         }
@@ -32,7 +32,7 @@ public class BoardDto {
     }
 
     public void validate() {
-        if (size < 3|| data == null||nextPlayerColor == null) {
+        if (size < 3 || data == null || nextPlayerColor == null) {
             throw new IllegalArgumentException();
         }
         if (data.length() != size * size) {
@@ -47,12 +47,12 @@ public class BoardDto {
         return nextPlayerColor;
     }
 
-    public void setData(String data) {
-        this.data = data;
-    }
-
     public void setNextPlayerColor(String nextPlayerColor) {
         this.nextPlayerColor = nextPlayerColor;
+    }
+
+    public void setData(String data) {
+        this.data = data;
     }
 
     public void setSize(int size) {
