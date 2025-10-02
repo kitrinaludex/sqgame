@@ -12,12 +12,10 @@ public class BoardDto {
     }
 
     public Board toBoard() {
+        validate();
+
         Board board = new Board(size);
         char[] chars = data.toCharArray();
-
-        if (chars.length != size * size) {
-            throw new IllegalArgumentException();
-        }
 
         for (int y = 0; y < size; y++) {
             for (int x = 0; x < size;x++) {
@@ -29,7 +27,20 @@ public class BoardDto {
                 }
             }
         }
+
         return board;
+    }
+
+    public void validate() {
+        if (size < 3|| data == null||nextPlayerColor == null) {
+            throw new IllegalArgumentException();
+        }
+        if (data.length() != size * size) {
+            throw new IllegalArgumentException();
+        }
+        if (!nextPlayerColor.equals("b") && !nextPlayerColor.equals("w")) {
+            throw new IllegalArgumentException();
+        }
     }
 
     public String getNextPlayerColor() {
