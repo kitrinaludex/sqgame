@@ -1,9 +1,9 @@
 package io.github.kitrinaludex.server.dto;
 
 public class SimpleMoveDto {
-    public int x;
-    public int y;
-    public String color;
+    private int x;
+    private int y;
+    private String color;
 
     public SimpleMoveDto() {
     }

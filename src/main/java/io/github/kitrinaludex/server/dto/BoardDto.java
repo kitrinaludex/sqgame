@@ -4,15 +4,9 @@ import io.github.kitrinaludex.game.Board;
 import io.github.kitrinaludex.game.Move;
 
 public class BoardDto {
-    public int size;
-    public String data;
-    public String nextPlayerColor;
-
-    public BoardDto(String data, String nextPlayerColor, int size) {
-        this.data = data;
-        this.nextPlayerColor = nextPlayerColor;
-        this.size = size;
-    }
+    private int size;
+    private String data;
+    private String nextPlayerColor;
 
     public BoardDto() {
     }
@@ -24,7 +18,6 @@ public class BoardDto {
         if (chars.length != size * size) {
             throw new IllegalArgumentException();
         }
-
 
         for (int y = 0; y < size; y++) {
             for (int x = 0; x < size;x++) {
@@ -39,16 +32,8 @@ public class BoardDto {
         return board;
     }
 
-    public int getSize() {
-        return size;
-    }
-
     public String getNextPlayerColor() {
         return nextPlayerColor;
-    }
-
-    public String getData() {
-        return data;
     }
 
     public void setData(String data) {

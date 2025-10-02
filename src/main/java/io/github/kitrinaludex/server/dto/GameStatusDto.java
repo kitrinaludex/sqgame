@@ -1,9 +1,9 @@
 package io.github.kitrinaludex.server.dto;
 
 public class GameStatusDto {
-    public int status;
-    public String color;
-    public String message;
+    private int status;
+    private String color;
+    private String message;
 
     public GameStatusDto() {
     }
