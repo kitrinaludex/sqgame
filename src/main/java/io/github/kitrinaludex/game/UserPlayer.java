@@ -2,7 +2,7 @@ package io.github.kitrinaludex.game;
 
 public class UserPlayer extends Player {
 
-    public UserPlayer(PieceColor color) {
+    public UserPlayer(char color) {
         super(color);
     }
 

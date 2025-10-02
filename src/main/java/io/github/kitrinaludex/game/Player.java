@@ -1,13 +1,13 @@
 package io.github.kitrinaludex.game;
 
 public abstract class Player {
-    protected final PieceColor color;
+    protected final char color;
 
-    public Player(PieceColor color) {
+    public Player(char color) {
         this.color = color;
     }
 
-    public PieceColor getColor() {
+    public char getColor() {
         return color;
     }
 

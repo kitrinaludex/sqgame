@@ -5,7 +5,7 @@ import java.util.Random;
 public class ComputerPlayer extends Player {
     private final Random rng = new Random();
 
-    public ComputerPlayer(PieceColor color) {
+    public ComputerPlayer(char color) {
         super(color);
     }
 

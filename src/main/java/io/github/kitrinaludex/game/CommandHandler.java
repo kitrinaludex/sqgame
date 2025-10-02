@@ -21,15 +21,20 @@ public class CommandHandler {
                     }
 
                     int n = Integer.parseInt(parts[1]);
-                    Player p1 = parsePlayer(parts[2],parts[3]);
-                    Player p2 = parsePlayer(parts[4],parts[5]);
-                    if (p1.color == p2.color) {
+
+                    try {
+                        Player p1 = parsePlayer(parts[2], parts[3]);
+                        Player p2 = parsePlayer(parts[4], parts[5]);
+                        if (p1.color == p2.color) {
+                            throw new IllegalArgumentException();
+                        }
+                        currentGame = new Game(n,p1,p2);
+                        System.out.println("New game started");
+                        currentGame.start();
+                        break;
+                    }catch (IllegalArgumentException e) {
                         System.out.println("Incorrect command");
                     }
-                    currentGame = new Game(n,p1,p2);
-                    currentGame.start();
-                    System.out.println("New game started");
-                    break;
 
                 case "MOVE":
                     if (currentGame == null) {
@@ -61,15 +66,18 @@ public class CommandHandler {
 
 
     public Player parsePlayer(String playerType,String playerColor) {
-
+        char pc = playerColor.toUpperCase().charAt(0);
+        if (pc != 'W' && pc != 'B') {
+            throw new IllegalArgumentException();
+        }
         if (playerType.equals("user")) {
             try {
-                return new UserPlayer(PieceColor.valueOf(playerColor.toUpperCase()));
+                return new UserPlayer(pc);
             }catch (IllegalArgumentException e) {
                 System.out.println("Incorrect command");
             }
         }
-        return new ComputerPlayer(PieceColor.valueOf(playerColor.toUpperCase()));
+        return new ComputerPlayer(pc);
     }
 
     private void printHelp() {

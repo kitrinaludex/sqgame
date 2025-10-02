@@ -5,17 +5,17 @@ import java.util.Collections;
 import java.util.List;
 
 public class Board {
-    private final PieceColor[][] cells;
+    private final char[][] cells;
     private final int size;
     private final int maxTurnCount;
     private int turnCount = 1;
 
     public Board(int size) {
         this.size = size;
-        this.cells = new PieceColor[size][size];
+        this.cells = new char[size][size];
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                cells[i][j] = null;
+                cells[i][j] = ' ';
             }
         }
         maxTurnCount = size * size;
@@ -27,7 +27,7 @@ public class Board {
         if (x < 0 || x >= size || y < 0 || y >= size) {
             return false;
         }
-        if (cells[x][y] != null) {
+        if (cells[x][y] != ' ') {
             return false;
         }
         cells[x][y] = move.color;
@@ -37,7 +37,7 @@ public class Board {
     }
 
     public boolean isCellEmpty(int x, int y) {
-        return cells[x][y] == null;
+        return cells[x][y] == ' ';
     }
 
     public boolean isFull() {
@@ -48,8 +48,8 @@ public class Board {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                PieceColor c = cells[i][j];
-                sb.append((c == null ? "." : c.name()));
+                char c = cells[i][j];
+                sb.append((c == ' ' ? " " : c));
             }
             sb.append("\n");
         }
@@ -60,7 +60,7 @@ public class Board {
         return size;
     }
 
-    public boolean checkWin(PieceColor color) {
+    public boolean checkWin(char color) {
         // ничего умнее я не придумал ):
         List<int[]> points = new ArrayList<>();
         for (int y = 0; y < size; y++) {
