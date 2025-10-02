@@ -20,37 +20,6 @@ public class Game {
         }
     }
 
-//    public void applyMove(Move move) {
-//        if (finished) {
-//            System.out.println("Game already finished");
-//            return;
-//        }
-//
-//        if (!board.placePiece(move)) {
-//            System.out.println("Incorrect command");
-//            return;
-//        }
-//
-//        System.out.println(board); //для наглядности, в тз этого не просили
-//
-//        if (board.checkWin(move.color)) {
-//            System.out.println("Game finished. " + move.color + " wins!");
-//            finished = true;
-//            return;
-//        }
-//
-//        if (board.isFull()) {
-//            System.out.println("Game finished. Draw");
-//            finished = true;
-//            return;
-//        }
-//
-//        switchPlayer();
-//        if (currentPlayer.isComputer()) {
-//            applyMove(currentPlayer.getMove(board));
-//        }
-//    }
-
     public void applyMove(Move move) {
         if (finished) {
             return;
