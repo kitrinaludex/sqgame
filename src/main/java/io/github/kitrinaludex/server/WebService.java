@@ -12,6 +12,8 @@ public class WebService {
         server.createContext("/api/squares/nextMove", new MoveHandler());
         server.createContext("/api/squares/gameStatus", new StatusHandler());
 
+        server.createContext("/",new StaticFileHandler());
+
         server.setExecutor(null);
         server.start();
 
