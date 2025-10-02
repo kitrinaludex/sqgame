@@ -47,14 +47,26 @@ public class StatusHandler implements HttpHandler {
                 os.write(bytes);
             }
 
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             status.setStatus(-1);
-            status.setMessage("Error");
+            status.setMessage("Bad Request");
             status.setColor("");
 
             byte[] bytes = mapper.writeValueAsBytes(status);
             exchange.getResponseHeaders().set("Content-Type", "application/json");
             exchange.sendResponseHeaders(400, bytes.length);
+            try (OutputStream os = exchange.getResponseBody()) {
+                os.write(bytes);
+            }
+        }
+        catch (Exception e) {
+            status.setStatus(-1);
+            status.setMessage("Internal server error");
+            status.setColor("");
+
+            byte[] bytes = mapper.writeValueAsBytes(status);
+            exchange.getResponseHeaders().set("Content-Type", "application/json");
+            exchange.sendResponseHeaders(500, bytes.length);
             try (OutputStream os = exchange.getResponseBody()) {
                 os.write(bytes);
             }
