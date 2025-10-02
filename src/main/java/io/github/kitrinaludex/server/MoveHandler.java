@@ -10,8 +10,8 @@ import io.github.kitrinaludex.server.dto.BoardDto;
 import io.github.kitrinaludex.server.dto.SimpleMoveDto;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Map;
 
 public class MoveHandler implements HttpHandler {
     private final ObjectMapper mapper = new ObjectMapper();
@@ -24,12 +24,19 @@ public class MoveHandler implements HttpHandler {
         }
 
         try {
-            BoardDto req;
-            try (InputStream is = exchange.getRequestBody()) {
-                req = mapper.readValue(is, BoardDto.class);
+            final int MAX_SIZE = 10000;
+
+            byte[] body = exchange.getRequestBody().readNBytes(MAX_SIZE + 1);
+            if (body.length > MAX_SIZE) {
+                sendJsonError(exchange,413,"Payload too large");
             }
 
+            BoardDto req = mapper.readValue(body,BoardDto.class);
             Board board = req.toBoard();
+
+            if (board.isFull()) {
+                throw new IllegalArgumentException();
+            }
 
             ComputerPlayer ai = new ComputerPlayer(req.getNextPlayerColor().charAt(0));
             Move move = ai.getMove(board);
@@ -43,18 +50,21 @@ public class MoveHandler implements HttpHandler {
                 os.write(bytes);
             }
 
+        }catch (IOException | IllegalArgumentException e) {
+            sendJsonError(exchange,400,"Bad Request");
         }catch (Exception e) {
-            e.printStackTrace();
-            String msg = "Error:" + e.getMessage();
-            byte[] bytes = msg.getBytes();
-            exchange.getResponseHeaders().set("Content-Type", "application/json");
-            exchange.sendResponseHeaders(500,bytes.length);
-            try (OutputStream os = exchange.getResponseBody()) {
-                os.write(bytes);
-            }
+            sendJsonError(exchange,500,"Internal Server Error");
         }
-
     }
 
+    private void sendJsonError(HttpExchange exchange,int statusCode,String message) throws IOException {
+        Map<String,String> error = Map.of("error",message);
+        byte[] bytes = mapper.writeValueAsBytes(error);
 
+        exchange.getResponseHeaders().set("Content-Type", "application/json");
+        exchange.sendResponseHeaders(statusCode,bytes.length);
+        try (OutputStream os = exchange.getResponseBody()) {
+            os.write(bytes);
+        }
+    }
 }
