@@ -10,9 +10,9 @@ public class CommandHandler {
 
         while (true) {
             String input = sc.nextLine().trim();
-
             String[] parts = input.split("[ ,]+");
             String command = parts[0].toUpperCase();
+
             switch (command) {
                 case "GAME":
                     if (parts.length != 6){
@@ -24,10 +24,11 @@ public class CommandHandler {
                     Player p1 = parsePlayer(parts[2],parts[3]);
                     Player p2 = parsePlayer(parts[4],parts[5]);
                     if (p1.color == p2.color) {
-                        System.out.println("Неверные параметры");
+                        System.out.println("Incorrect command");
                     }
                     currentGame = new Game(n,p1,p2);
                     currentGame.start();
+                    System.out.println("New game started");
                     break;
 
                 case "MOVE":

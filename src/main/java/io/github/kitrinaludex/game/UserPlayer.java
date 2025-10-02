@@ -13,7 +13,4 @@ public class UserPlayer extends Player {
     public boolean isComputer() {
         return false;
     }
-
-
-
 }

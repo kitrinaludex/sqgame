@@ -8,7 +8,7 @@ public class Board {
     private final PieceColor[][] cells;
     private final int size;
     private final int maxTurnCount;
-    private int turnCount = 0;
+    private int turnCount = 1;
 
     public Board(int size) {
         this.size = size;
